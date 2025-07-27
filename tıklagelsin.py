@@ -7,6 +7,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, Messa
 from flask import Flask
 from threading import Thread
 from apscheduler.schedulers.background import BackgroundScheduler
+import os  # <-- eklendi
 
 # Sabitler
 TOKEN = "8273999259:AAHZzcTlctE3FiahDsLP1IFQU8moB-5XnAU"
@@ -36,7 +37,8 @@ def home():
     return "Bot aktif 🎯"
 
 def run():
-    app_web.run(host='0.0.0.0', port=8080)
+    port = int(os.environ.get("PORT", 8080))  # PORT ortam değişkenini oku, yoksa 8080 kullan
+    app_web.run(host='0.0.0.0', port=port)
 
 def keep_alive():
     t = Thread(target=run)
